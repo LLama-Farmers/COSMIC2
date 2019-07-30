@@ -44,7 +44,7 @@
 </div>
 <br>
 <br>
-	<canvas id="canvas" width="690" height="651" style="cursor:crosshair;background:url(http://www.mundoanimalia.com/images/articles/66/58/06/7f6ffaa6bb0b408017b62254211691b5/gallina.jpg)"></canvas>
+	<canvas id="canvas" width="690" height="651" style="cursor:crosshair;background:img/May08_03.05.02.bin_1_0.png"></canvas>
 	
 	<div id="slideContainer"></div>
 <!--END of HTML-->
@@ -71,6 +71,22 @@ var images = [
 	];  
 var pointSize = 3;
 var coordPoints = [];
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var g = document.getElementById('image-btn');
+
+
+for (var i = 0, len = g.children.length; i < len; i++)
+{
+
+    (function(index){
+        g.children[i].onclick = function(){
+          make_base(images[index], index);
+        }    
+    })(i);
+
+}
+
 $("#canvas").click(function(e){
   getPosition(e); 
   
@@ -103,6 +119,16 @@ function drawCoordinates(x,y){
     ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
     ctx.fill();
 }
+
+function make_base(file_path, index)
+{
+  base_image = new Image();
+  base_image.src = file_path;
+  base_image.onload = function(){
+    ctx.drawImage(base_image, 0, 0);
+  }
+}
+
 </script>
 <!--END of SCRIPTING-->
 
