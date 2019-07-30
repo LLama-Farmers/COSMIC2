@@ -9,12 +9,17 @@
 	    left:0px;
     }
     .marker {
+      text-align: center;
 	    background-color: red;
 	    width: 10px;
     	height:10px;
-	    position:relative;
+	    position:absolute;
     	border-radius: 5px;
-}
+    }
+    .selection-buttons {
+      text-align:center;
+      margin-top:20px;
+    }
 </style>
 <!--END of STYLE-->
 
@@ -57,9 +62,17 @@
 </div>
 <br>
 <br>
-<div id="image-container">
+<div>
+  <div id="image-container"></div>
+</div>
+<div class="selection-buttons">
+  <button type="button" id = "delete-image" class="btn btn-info btn-md">Previous</button>
+  <button type="button" id = "delete-image" class="btn btn-danger btn-lg">Ignore Image</button>
+  <button type="button" id = "delete-image" class="btn btn-success btn-lg">Restore Image</button>
+  <button type="button" id = "delete-image" class="btn btn-info btn-md">Next</button>
 </div>
 <br>	
+<br>
 <div id="slideContainer"></div>
 <!--END of HTML-->
 
@@ -120,8 +133,8 @@ $("#image-container").click(function (e) {
 
     var marker = document.createElement('div');
 			$(marker).attr('class', 'marker')
-					.css('top', posY)
-					.css('left', posX);
+      .css('top', e.pageY - $(this).position().top - 10)
+					.css('left', e.pageX - $(this).position().left - 10);
 			this.appendChild(marker);
 
 			$(marker).contextmenu(function(){
