@@ -36,7 +36,7 @@
             <button type="button" class="btn btn-light btn-md">14</button>    
             <button type="button" class="btn btn-light btn-md">15</button>
             <button type="button" class="btn btn-light btn-md">16</button>
-            <button type="button" class="btn btn-light btn-md ">17</button>
+            <button type="button" class="btn btn-light btn-md">17</button>
             <button type="button" class="btn btn-light btn-md">18</button>    
             <button type="button" class="btn btn-light btn-md">19</button>
             <button type="button" class="btn btn-light btn-md">20</button>
@@ -44,9 +44,7 @@
 </div>
 <br>
 <br>
-<div id="image-container">
     <canvas id="canvas" width="690" height="651" style="cursor:crosshair;background:url(http://www.mundoanimalia.com/images/articles/66/58/06/7f6ffaa6bb0b408017b62254211691b5/gallina.jpg)"></canvas>
-</div>
 <!---<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 500px; margin: 0 auto">
     <div class="carousel-inner">
         <div class="carousel-item active" id="img/May08_03.05.02.bin_1_0.png">
@@ -80,6 +78,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
+
+    $("#canvas").click(function(e){
+        getPosition(e); 
+        
+        var str = '<ul>'
+        coordPoints.forEach(function(coordPoints) {
+        str += '<li>'+ coordPoints[0] +", " + coordPoints[1] + '</li>';
+        }); 
+        
+        str += '</ul>';
+        document.getElementById("slideContainer").innerHTML = str;
+    });
+
+    var pointSize = 3;
+    var coordPoints = [];
+
+    function getPosition(event){
+     var rect = canvas.getBoundingClientRect();
+     var x = event.clientX - rect.left;
+     var y = event.clientY - rect.top;
+        
+     drawCoordinates(x,y);
+     coordPoints.push([x,y]);
+    }
+
+    function drawCoordinates(x,y){	
+        var ctx = document.getElementById("canvas").getContext("2d");
+
+
+        ctx.fillStyle = "#ff2626"; // Red color
+
+        ctx.beginPath();
+        ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
+        ctx.fill();
+    }
+
+
     var images = [
 		"img/May08_03.05.02.bin_1_0.png",	"img/May08_05.53.51.bin_11_0.png",
 		"img/May08_03.13.02.bin_2_0.png",	"img/May08_05.55.31.bin_12_0.png",

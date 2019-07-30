@@ -1,9 +1,49 @@
+<!--START of STYLE-->
+<style>
+    #canvas {
+        margin: auto;
+        display: block;
+    }
+</style>
+<!--END of STYLE-->
+
 <!--START of HTML-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<p>
-	Able to click and add points on the hen, and it will work on most devices.<br><br>Zooming in on the picture still preserves the locale of the points.<br><br>Example uses jQuery.
-	</p>
-	<br>
+<br>
+<br>
+<h1 class="display-1" style="text-align:center">Cryo-EM <span class="text-info"><b>COSMIC2</b></span></h1>
+<p class="lead" style="text-align:center;font-size:36px">
+    Open Source Multiplatform Infrastructure for Cloud Computing
+</p>
+<br>
+<br>
+<div class="container">
+    <h1 class="display-4"><span class="text-info">Images</span></h1>
+    <div id="image-btn">
+        <button type="button" class="btn btn-light btn-md">1</button>
+        <button type="button" class="btn btn-light btn-md">2</button>    
+        <button type="button" class="btn btn-light btn-md">3</button>
+        <button type="button" class="btn btn-light btn-md">4</button>
+        <button type="button" class="btn btn-light btn-md ">5</button>
+        <button type="button" class="btn btn-light btn-md">6</button>    
+        <button type="button" class="btn btn-light btn-md">7</button>
+        <button type="button" class="btn btn-light btn-md">8</button>
+        <button type="button" class="btn btn-light btn-md ">9</button>
+        <button type="button" class="btn btn-light btn-md">10</button>    
+        <button type="button" class="btn btn-light btn-md">11</button>
+        <button type="button" class="btn btn-light btn-md">12</button>
+        <button type="button" class="btn btn-light btn-md">13</button>
+        <button type="button" class="btn btn-light btn-md">14</button>    
+        <button type="button" class="btn btn-light btn-md">15</button>
+        <button type="button" class="btn btn-light btn-md">16</button>
+        <button type="button" class="btn btn-light btn-md">17</button>
+        <button type="button" class="btn btn-light btn-md">18</button>    
+        <button type="button" class="btn btn-light btn-md">19</button>
+        <button type="button" class="btn btn-light btn-md">20</button>
+    </div>
+</div>
+<br>
+<br>
 	<canvas id="canvas" width="690" height="651" style="cursor:crosshair;background:url(http://www.mundoanimalia.com/images/articles/66/58/06/7f6ffaa6bb0b408017b62254211691b5/gallina.jpg)"></canvas>
 	
 	<div id="slideContainer"></div>
@@ -15,6 +55,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
+
+
+var images = [
+		"img/May08_03.05.02.bin_1_0.png",	"img/May08_05.53.51.bin_11_0.png",
+		"img/May08_03.13.02.bin_2_0.png",	"img/May08_05.55.31.bin_12_0.png",
+		"img/May08_03.15.02.bin_3_0.png",	"img/May08_05.57.01.bin_13_0.png",
+		"img/May08_03.43.44.bin_4_0.png",	"img/May08_05.59.52.bin_14_0.png",
+		"img/May08_04.32.27.bin_5_0.png",	"img/May08_06.09.02.bin_15_0.png",
+		"img/May08_04.33.57.bin_6_0.png",	"img/May08_06.30.43.bin_16_0.png",
+		"img/May08_04.36.57.bin_7_0.png",	"img/May08_07.08.55.bin_17_0.png",
+		"img/May08_05.24.39.bin_8_0.png",	"img/May08_07.10.35.bin_18_0.png",
+		"img/May08_05.31.00.bin_9_0.png",	"img/May08_07.13.35.bin_19_0.png",
+		"img/May08_05.35.20.bin_10_0.png",	"img/May08_07.30.46.bin_20_0.png"
+	];  
+var pointSize = 3;
+var coordPoints = [];
 $("#canvas").click(function(e){
   getPosition(e); 
   
@@ -27,9 +83,6 @@ $("#canvas").click(function(e){
   document.getElementById("slideContainer").innerHTML = str;
   
 });
-
-var pointSize = 3;
-var coordPoints = [];
 
 function getPosition(event){
      var rect = canvas.getBoundingClientRect();
