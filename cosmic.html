@@ -1,22 +1,14 @@
 <!--START of STYLE-->
 <style>
-    #image-container{
-      height: 500px;
-      width: 500px;
-	    margin: 0 auto;
-	    position:relative;
-	    top:0px;
-	    left:0px;
-    }
-    .marker {
-      text-align: center;
-	    background-color: red;
-	    width: 10px;
-    	height:10px;
-	    position:absolute;
-    	border-radius: 5px;
+    #canvas {
+        margin: auto;
+        display: block;
     }
     .selection-buttons {
+      text-align:center;
+      margin-top:20px;
+    }
+    .get-info{
       text-align:center;
       margin-top:20px;
     }
@@ -26,54 +18,50 @@
 <!--START of HTML-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <br>
-<br>
-<h1 class="display-1" style="text-align:center">Cryo-EM <span class="text-info"><b>COSMIC2</b></span></h1>
+<h1 class="display-2" style="text-align:center">Cryo-EM <span class="text-info"><b>COSMIC2</b></span></h1>
 <p class="lead" style="text-align:center;font-size:36px">
-  Open Source Multiplatform Infrastructure for Cloud Computing
+    Open Source Multiplatform Infrastructure for Cloud Computing
 </p>
-<br>
-<br>
 <div class="container">
     <h1 class="display-4"><span class="text-info">Images</span></h1><p class="lead" style="font-size:24px">
         Click on a button to display an image
     </p>
     <div class = "image-btn" id="image-btn">
-        <button type="button" class="btn btn-light btn-md" >1</button>
-        <button type="button" class="btn btn-light btn-md" >2</button>    
-        <button type="button" class="btn btn-light btn-md" >3</button>
-        <button type="button" class="btn btn-light btn-md" >4</button>
-        <button type="button" class="btn btn-light btn-md" >5</button>
-        <button type="button" class="btn btn-light btn-md" >6</button>    
-        <button type="button" class="btn btn-light btn-md" >7</button>
-        <button type="button" class="btn btn-light btn-md" >8</button>
-        <button type="button" class="btn btn-light btn-md" >9</button>
-        <button type="button" class="btn btn-light btn-md" >10</button>    
-        <button type="button" class="btn btn-light btn-md" >11</button>
-        <button type="button" class="btn btn-light btn-md" >12</button>
-        <button type="button" class="btn btn-light btn-md" >13</button>
-        <button type="button" class="btn btn-light btn-md" >14</button>    
-        <button type="button" class="btn btn-light btn-md" >15</button>
-        <button type="button" class="btn btn-light btn-md" >16</button>
-        <button type="button" class="btn btn-light btn-md" >17</button>
-        <button type="button" class="btn btn-light btn-md" >18</button>    
-        <button type="button" class="btn btn-light btn-md" >19</button>
-        <button type="button" class="btn btn-light btn-md" >20</button>
+        <button type="button" class="btn btn-light btn-md">1</button>
+        <button type="button" class="btn btn-light btn-md">2</button>    
+        <button type="button" class="btn btn-light btn-md">3</button>
+        <button type="button" class="btn btn-light btn-md">4</button>
+        <button type="button" class="btn btn-light btn-md ">5</button>
+        <button type="button" class="btn btn-light btn-md">6</button>    
+        <button type="button" class="btn btn-light btn-md">7</button>
+        <button type="button" class="btn btn-light btn-md">8</button>
+        <button type="button" class="btn btn-light btn-md ">9</button>
+        <button type="button" class="btn btn-light btn-md">10</button>    
+        <button type="button" class="btn btn-light btn-md">11</button>
+        <button type="button" class="btn btn-light btn-md">12</button>
+        <button type="button" class="btn btn-light btn-md">13</button>
+        <button type="button" class="btn btn-light btn-md">14</button>    
+        <button type="button" class="btn btn-light btn-md">15</button>
+        <button type="button" class="btn btn-light btn-md">16</button>
+        <button type="button" class="btn btn-light btn-md">17</button>
+        <button type="button" class="btn btn-light btn-md">18</button>    
+        <button type="button" class="btn btn-light btn-md">19</button>
+        <button type="button" class="btn btn-light btn-md">20</button>
     </div>
 </div>
 <br>
-<br>
-<div>
-  <div id="image-container"></div>
-</div>
-<div class="selection-buttons">
-  <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="prevImage()">Previous</button>
-  <button type="button" id = "delete-image" class="btn btn-danger btn-lg">Ignore Image</button>
-  <button type="button" id = "delete-image" class="btn btn-success btn-lg">Restore Image</button>
-  <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="nextImage()">Next</button>
-</div>
-<br>	
-<br>
-<div id="slideContainer"></div>
+	<canvas id="canvas" width="550" height="550" style="cursor:crosshair;background:img/May08_03.05.02.bin_1_0.png"></canvas>
+  <div class="get-info">
+    <button type="button" class="btn btn-secondary btn-sm" onclick="getInfo()">Image Information</button>
+  </div>
+  <div class="selection-buttons">
+      <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="prevImage()">Previous</button>
+      <button type="button" id = "delete-image" class="btn btn-danger btn-lg">Ignore Image</button>
+      <button type="button" id = "delete-image" class="btn btn-success btn-lg">Restore Image</button>
+      <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="nextImage()">Next</button>
+    </div>
+  <br>
+	<div id="slideContainer"></div>
 <!--END of HTML-->
 
 <!--START of SCRIPTING-->
@@ -82,7 +70,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
-
 
 var images = [
 		"img/May08_03.05.02.bin_1_0.png",	"img/May08_05.53.51.bin_11_0.png",
@@ -96,13 +83,20 @@ var images = [
 		"img/May08_05.31.00.bin_9_0.png",	"img/May08_07.13.35.bin_19_0.png",
 		"img/May08_05.35.20.bin_10_0.png",	"img/May08_07.30.46.bin_20_0.png"
 	];  
+var photos = [];
 var imageData = {};
 var coordinates = [];
-var btn_value;
-
 var parent = document.querySelector('.image-btn');
 var children = parent.children;
+console.log(children);
 
+$('#image-btn button').click(function(){
+  $("div").removeClass("marker");
+  var index = $(this).index();
+  make_base(images[index], index);
+  currentIndex = index;
+  console.log(index);
+});
 
 for (var i = 0; i < children.length; i++){
   children[i].value = images[i];
@@ -110,96 +104,207 @@ for (var i = 0; i < children.length; i++){
   imageData[image_name] = {coordinates:[]};
 }
 
-$('#image-btn button').click(function(){
-  var index = $(this).index();
-  var image_in_div = images[index];
-  $("#image-container").css('background-image', 'url("' + image_in_div + '")');
-  $("div").removeClass("marker");
+function Photo(name) {
+  this.name = name;
+  this.points = [];
+  this.alive = true;
+  this.htmlText = "";
+  this.addPoint = function(x, y){
+    this.points.push([x,y]);
+    this.htmlText += '<li>'+ x +", " + y + '</li>'
+  };
+  this.removePoint = function(x, y){
+    this.points.pop([x,y]);
+  };
+  this.rejectImage = function(){
+    alive = false;
+  };
+  this.acceptImage = function(){
+    alive = true;
+  };
+  this.JSON = function(){
+    //TO DO:
+  };
+  this.getHtml = function(){
+    return "<p>"+this.name+": </p>"+"<ul>"+this.htmlText+"</ul>";
+  }
+}
+
+for(var i = 0; i<images.length; i++)
+{
+	var temp = new Photo(images[i]);
+	photos.unshift(temp);
+}
+console.log(photos);
+console.log(photos.points);
+var pointSize = 5;
+var coordPoints = [];
+var currentIndex = 0;
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var g = document.getElementById('image-btn');
+//set up a default picture :)
+make_base(images[currentIndex], currentIndex);
+//Gets index of the button click -> correlates to image displayed
+/*for (var i = 0, len = g.children.length; i < len; i++)
+{
+  (function(index){
+    g.children[i].onclick = function(){
+      make_base(images[index], index);
+	    currentIndex = index;
+	str = photos[currentIndex].getHtml();
+  document.getElementById("slideContainer").innerHTML = str;
+    }    
+  })(i);
+}*/
+//
+$("#canvas").click(function(e){
+  getPosition(e); 
+  /*
+  var str = '<ul>'
+  coordPoints.forEach(function(coordPoints) {
+  str += '<li>'+ coordPoints[0] +", " + coordPoints[1] + '</li>';
+  }); 
+  
+  str += '</ul>';
+  */
+  str = photos[currentIndex].getHtml();
+  document.getElementById("slideContainer").innerHTML = str;
+  
 });
 
-$("#image-container").click(function (e) {
-  var image_name;
-
-  if ($('#image-container').css('background-image') == 'none') {
-     alert("Please click on a button to display an image.");
-  }
-  else{
-    var str =  ($('#image-container').css('background-image').replace(/^.*[\\\/]/, ''))
-    image_name = "img/" + str.substring(0, str.length - 2);
+//Gets the coordinates of where the user clicked within the canvas
+/*
+  Calls drawCoordinates()
+  Calls createObject(image_name, posX, posY)
+  Pushes coordinates to coordPoints and photos
+*/
+function getPosition(event){
+     var rect = canvas.getBoundingClientRect();
+     var x = event.clientX - rect.left;
+     var y = event.clientY - rect.top;
     
-    var subtractX = $(this).position().left;
-	  var subtractY = $(this).position().top;
-	  var posX = e.clientX - subtractX;
-    var posY = e.clientY - subtractY;
-    coordinates.push([posX, posY]);
+     createObject(images[currentIndex], x, y);
+     drawCoordinates(x,y);
+     coordPoints.push([x,y]);
+     photos[currentIndex].addPoint(x,y);
+}
 
-    var marker = document.createElement('div');
-			$(marker).attr('class', 'marker')
-					.css('top', e.pageY - $(this).position().top - 5)
-					.css('left', e.pageX - $(this).position().left - 5);
-			this.appendChild(marker);
+//Draws coordinates 
+function drawCoordinates(x,y){	
+  	var ctx = document.getElementById("canvas").getContext("2d");
+  	ctx.fillStyle = "#F3F414"; // Red color
+    ctx.beginPath();
+    ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
+    ctx.fill();
+}
 
-			$(marker).contextmenu(function(){
-				// delete marker (=this)
- 				$(marker).remove();
-				return false;
-			});
-
-    console.log("Coords:" + coordinates);
-    createObject(image_name, posX, posY);
-    
-    //imageData[image_name] = 
-    //console.log(image_name);
-  }
-});
-
+//Creates dynamic object storing coordinate points associated to its image name
 function createObject(image_name, posX, posY){
   imageData[image_name].coordinates.push([posX, posY]);
-  console.log(imageData);
 }
 
-function nextImage(){
-  $("div").removeClass("marker");
-  if ($('#image-container').css('background-image') == 'none'){
-    $("#image-container").css('background-image', 'url("' + images[0] + '")');
-  }
-  else{
-    var str =  ($('#image-container').css('background-image').replace(/^.*[\\\/]/, ''))
-    var image_name = "img/" + str.substring(0, str.length - 2);
-    var next = images.indexOf(image_name) + 1;
-
-    if(next > 19){
-      alert("There are no more images beyond this point.");
-    }
-    else{
-      $("#image-container").css('background-image', 'url("' + images[next] + '")');
-      restoreMarks(images[next]);
+//Canvas has background image of corresponding index
+function make_base(file_path, index)
+{
+  base_image = new Image();
+  base_image.src = file_path;
+  base_image.onload = function(){
+    ctx.drawImage(base_image, 0, 0);
+    tempPoints = photos[currentIndex].points;
+    for(var i = 0; i<tempPoints.length; i++){
+      tempPoint = tempPoints[i];
+	var x = parseInt(tempPoint[0]);
+	var y = parseInt(tempPoint[1]);
+      drawCoordinates(x, y);
     }
   }
 }
 
+//Key board function to navigate through images
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+        case 37:
+            prevImage();
+            break;
+        case 39:
+            nextImage();
+            break;
+    }
+};
+
+//Takes user to previous image
 function prevImage(){
-  $("div").removeClass("marker");
-  if ($('#image-container').css('background-image') == 'none'){
-    alert("There is no previous image.");
+  document.getElementById("slideContainer").innerHTML = "";
+  if (currentIndex >= 1){
+    children[currentIndex-1].click();
   }
   else{
-    var str =  ($('#image-container').css('background-image').replace(/^.*[\\\/]/, ''))
-    var image_name = "img/" + str.substring(0, str.length - 2);
-    var prev = images.indexOf(image_name) - 1;
-
-    if (prev < 0){
-      alert("There are no images before this point.");
-    }
-    else{
-      $("#image-container").css('background-image', 'url("' + images[prev] + '")');
-      restoreMarks(images[prev]);
-    }
+    alert("There are no images before this point.");
   }
 }
 
-function restoreMarks(image){
-  console.log(imageData[image].coordinates);
+//Takes user to following image
+function nextImage(){
+  document.getElementById("slideContainer").innerHTML = "";
+  if (currentIndex < 19){
+  children[currentIndex+1].click();
+  }
+  else{
+    alert("There are no more images beyond this point.");
+  }
+}
+
+function getInfo(){
+  var imageName = images[currentIndex];
+  var xCoords = [];
+  var yCoords = [];
+
+  console.log(imageData[imageName].coordinates.length);
+
+  for(var i = 0; i < imageData[imageName].coordinates.length; i++){
+    xCoords.push(imageData[imageName].coordinates[i][0]);
+    yCoords.push(imageData[imageName].coordinates[i][1]);
+  }
+  console.log(xCoords);
+  console.log(yCoords);
+
+ var tableHeaders = ["Image Name", "X-Coordinates", "Y-Coordinates"];
+  var dataTable = new Array();
+  var imageCol = [];
+
+  dataTable.push(tableHeaders);
+
+  imageCol[0] = imageName;
+
+  for (var i = 1; i < xCoords.length; i++){
+    imageCol[i] = '';
+  }
+
+  for(var i = 0; i < xCoords.length; i++){
+    dataTable.push([imageCol[i],xCoords[i],yCoords[i]]);
+  }
+
+  let csvContent ="data:text/csv;charset=utf-8,";
+    dataTable.forEach(function(rowArray){
+      let row = rowArray.join(",");
+      csvContent += row + "\r\n";
+    })
+  
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.style.display = "none";
+  link.setAttribute("download", imageName + ".csv");
+  link.innerHTML = "Click Here to Download";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+//Allows user to disable image
+function disableImage(){
+  children[currentIndex].addClass('disabled');
 }
 </script>
 <!--END of SCRIPTING-->
