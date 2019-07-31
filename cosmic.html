@@ -66,10 +66,10 @@
   <div id="image-container"></div>
 </div>
 <div class="selection-buttons">
-  <button type="button" id = "delete-image" class="btn btn-info btn-md">Previous</button>
+  <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="prevImage()">Previous</button>
   <button type="button" id = "delete-image" class="btn btn-danger btn-lg">Ignore Image</button>
   <button type="button" id = "delete-image" class="btn btn-success btn-lg">Restore Image</button>
-  <button type="button" id = "delete-image" class="btn btn-info btn-md">Next</button>
+  <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="nextImage()">Next</button>
 </div>
 <br>	
 <br>
@@ -103,10 +103,10 @@ var btn_value;
 var parent = document.querySelector('.image-btn');
 var children = parent.children;
 
+
 for (var i = 0; i < children.length; i++){
   children[i].value = images[i];
   var image_name = children[i].value;
-  //console.log(image_name);
   imageData[image_name] = {coordinates:[]};
 }
 
@@ -114,10 +114,12 @@ $('#image-btn button').click(function(){
   var index = $(this).index();
   var image_in_div = images[index];
   $("#image-container").css('background-image', 'url("' + image_in_div + '")');
+  $("div").removeClass("marker");
 });
 
 $("#image-container").click(function (e) {
   var image_name;
+
   if ($('#image-container').css('background-image') == 'none') {
      alert("Please click on a button to display an image.");
   }
@@ -133,8 +135,8 @@ $("#image-container").click(function (e) {
 
     var marker = document.createElement('div');
 			$(marker).attr('class', 'marker')
-      .css('top', e.pageY - $(this).position().top - 10)
-					.css('left', e.pageX - $(this).position().left - 10);
+					.css('top', e.pageY - $(this).position().top - 5)
+					.css('left', e.pageX - $(this).position().left - 5);
 			this.appendChild(marker);
 
 			$(marker).contextmenu(function(){
@@ -156,5 +158,48 @@ function createObject(image_name, posX, posY){
   console.log(imageData);
 }
 
+function nextImage(){
+  $("div").removeClass("marker");
+  if ($('#image-container').css('background-image') == 'none'){
+    $("#image-container").css('background-image', 'url("' + images[0] + '")');
+  }
+  else{
+    var str =  ($('#image-container').css('background-image').replace(/^.*[\\\/]/, ''))
+    var image_name = "img/" + str.substring(0, str.length - 2);
+    var next = images.indexOf(image_name) + 1;
+
+    if(next > 19){
+      alert("There are no more images beyond this point.");
+    }
+    else{
+      $("#image-container").css('background-image', 'url("' + images[next] + '")');
+      restoreMarks(images[next]);
+    }
+  }
+}
+
+function prevImage(){
+  $("div").removeClass("marker");
+  if ($('#image-container').css('background-image') == 'none'){
+    alert("There is no previous image.");
+  }
+  else{
+    var str =  ($('#image-container').css('background-image').replace(/^.*[\\\/]/, ''))
+    var image_name = "img/" + str.substring(0, str.length - 2);
+    var prev = images.indexOf(image_name) - 1;
+
+    if (prev < 0){
+      alert("There are no images before this point.");
+    }
+    else{
+      $("#image-container").css('background-image', 'url("' + images[prev] + '")');
+      restoreMarks(images[prev]);
+    }
+  }
+}
+
+function restoreMarks(image){
+  console.log(imageData[image].coordinates);
+}
 </script>
 <!--END of SCRIPTING-->
