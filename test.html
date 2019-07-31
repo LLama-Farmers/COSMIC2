@@ -63,9 +63,11 @@
 function Photo(name) {
   this.name = name;
   this.points = [];
-  alive = true;
+  this.alive = true;
+  this.htmlText = "";
   this.addPoint = function(x, y){
     this.points.push([x,y]);
+    this.htmlText += '<li>'+ x +", " + y + '</li>'
   };
   this.removePoint = function(x, y){
     this.points.pop([x,y]);
@@ -79,6 +81,9 @@ function Photo(name) {
   this.JSON = function(){
     //TO DO:
   };
+  this.getHtml = function(){
+    return "<p>"+this.name+": </p>"+"<ul>"+this.htmlText+"</ul>";
+  }
 }
 
 var images = [
@@ -109,7 +114,7 @@ var ctx = canvas.getContext('2d');
 var g = document.getElementById('image-btn');
 
 //set up a default picture :)
-//make_base(images[currentIndex], currentIndex);
+make_base(images[currentIndex], currentIndex);
 
 //Gets index of the button click -> correlates to image displayed
 for (var i = 0, len = g.children.length; i < len; i++)
@@ -118,6 +123,8 @@ for (var i = 0, len = g.children.length; i < len; i++)
     g.children[i].onclick = function(){
       make_base(images[index], index);
 	    currentIndex = index;
+	str = photos[currentIndex].getHtml();
+  document.getElementById("slideContainer").innerHTML = str;
     }    
   })(i);
 }
@@ -125,13 +132,15 @@ for (var i = 0, len = g.children.length; i < len; i++)
 //
 $("#canvas").click(function(e){
   getPosition(e); 
-  
+  /*
   var str = '<ul>'
   coordPoints.forEach(function(coordPoints) {
   str += '<li>'+ coordPoints[0] +", " + coordPoints[1] + '</li>';
   }); 
   
   str += '</ul>';
+  */
+  str = photos[currentIndex].getHtml();
   document.getElementById("slideContainer").innerHTML = str;
   
 });
