@@ -56,8 +56,8 @@
   </div>
   <div class="selection-buttons">
       <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="prevImage()">Previous</button>
-      <button type="button" id = "delete-image" class="btn btn-danger btn-lg">Ignore Image</button>
-      <button type="button" id = "delete-image" class="btn btn-success btn-lg">Restore Image</button>
+      <button type="button" id = "delete-image" class="btn btn-danger btn-lg" onclick="disableImage()">Ignore Image</button>
+      <button type="button" id = "delete-image" class="btn btn-success btn-lg" onclick="restoreImage()">Restore Image</button>
       <button type="button" id = "delete-image" class="btn btn-info btn-md" onclick="nextImage()">Next</button>
     </div>
   <br>
@@ -89,6 +89,8 @@ var coordinates = [];
 var parent = document.querySelector('.image-btn');
 var children = parent.children;
 console.log(children);
+make_base(images[0], 0);
+
 
 $('#image-btn button').click(function(){
   $("div").removeClass("marker");
@@ -116,17 +118,17 @@ function Photo(name) {
   this.removePoint = function(x, y){
     this.points.pop([x,y]);
   };
-  this.rejectImage = function(){
-    alive = false;
+  this.ignoreImage = function(){
+    this.alive = false;
   };
-  this.acceptImage = function(){
-    alive = true;
+  this.restoreImage = function(){
+    this.alive = true;
   };
   this.JSON = function(){
     //TO DO:
   };
   this.getHtml = function(){
-    return "<p>"+this.name+": </p>"+"<ul>"+this.htmlText+"</ul>";
+    return "<p>"+this.name+" ("+(currentIndex+1)+")"+": </p>"+"<ul>"+this.htmlText+"</ul>";
   }
 }
 
@@ -144,19 +146,23 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var g = document.getElementById('image-btn');
 //set up a default picture :)
+/*
 make_base(images[currentIndex], currentIndex);
+str = photos[currentIndex].getHtml();
+document.getElementById("slideContainer").innerHTML = str;
+*/
 //Gets index of the button click -> correlates to image displayed
-/*for (var i = 0, len = g.children.length; i < len; i++)
+for (var i = 0, len = g.children.length; i < len; i++)
 {
   (function(index){
     g.children[i].onclick = function(){
       make_base(images[index], index);
 	    currentIndex = index;
-	str = photos[currentIndex].getHtml();
-  document.getElementById("slideContainer").innerHTML = str;
+	    str = photos[currentIndex].getHtml();
+      document.getElementById("slideContainer").innerHTML = str;
     }    
   })(i);
-}*/
+}
 //
 $("#canvas").click(function(e){
   getPosition(e); 
@@ -236,23 +242,41 @@ document.onkeydown = function(e) {
 //Takes user to previous image
 function prevImage(){
   document.getElementById("slideContainer").innerHTML = "";
-  if (currentIndex >= 1){
-    children[currentIndex-1].click();
-  }
-  else{
-    alert("There are no images before this point.");
+  var finished = false;
+  while(!finished){
+    if (currentIndex >= 1){
+      if(photos[currentIndex-1].alive){
+        children[currentIndex-1].click();
+        finished = true;
+      }else{
+currentIndex--;
+}
+    }
+    else{
+      alert("There are no live images before this point.");
+      finished = true;
+    }
   }
 }
 
 //Takes user to following image
 function nextImage(){
   document.getElementById("slideContainer").innerHTML = "";
-  if (currentIndex < 19){
-  children[currentIndex+1].click();
+var finished = false;
+while(!finished){
+  if (currentIndex < photos.length){
+    if(photos[currentIndex+1].alive){
+      children[currentIndex+1].click();
+      finished = true;
+    }else{
+currentIndex++;
+}
   }
   else{
-    alert("There are no more images beyond this point.");
+    alert("There are no more live images beyond this point.");
+	finished = true;
   }
+}
 }
 
 function getInfo(){
@@ -304,7 +328,12 @@ function getInfo(){
 
 //Allows user to disable image
 function disableImage(){
-  children[currentIndex].addClass('disabled');
+  photos[currentIndex].ignoreImage();
+  console.log("sad: "+photos[currentIndex].alive);
+}
+
+function restoreImage(){
+  photos[currentIndex].restoreImage();
 }
 </script>
 <!--END of SCRIPTING-->
